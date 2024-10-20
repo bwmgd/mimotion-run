@@ -1,9 +1,9 @@
 # -*- coding: utf8 -*-
 """
-File: main.py(小米运动)
+File: main.py(小米运动自动刷步数)
 Author: Bwmgd
 cron: 0 30 22 * * *
-new Env('森空岛签到');
+new Env('小米运动自动刷步数');
 Update: 2024/10/09
 """
 import requests, time, datetime, re, sys, os, json, random, math, traceback

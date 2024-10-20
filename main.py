@@ -1,4 +1,11 @@
 # -*- coding: utf8 -*-
+"""
+File: main.py(小米运动)
+Author: Bwmgd
+cron: 0 30 22 * * *
+new Env('森空岛签到');
+Update: 2024/10/09
+"""
 import requests, time, datetime, re, sys, os, json, random, math, traceback
 global skey,sckey,base_url,req_url,corpid,corpsecret,agentid,touser,toparty,totag,open_get_weather,area,qweather
 
@@ -76,7 +83,7 @@ class MiMotion():
 
     def get_time(self):
         try:
-            url = "http://api.m.taobao.com/rest/api3.do?api=mtop.common.getTimestamp"
+            url = "http://acs.m.taobao.com/gw/mtop.common.getTimestamp/"
             response = requests.get(url, headers=self.headers).json()
             t = response["data"]["t"]
             return t
@@ -181,12 +188,12 @@ class MiMotion():
             error_traceback = traceback.format_exc()
             print(error_traceback)
         try:
-            min_step = math.ceil(int(self.check_item.get("min_step", 10000))*step_ratio)
+            min_step = math.ceil(int(self.check_item.get("min_step", 10000)))
         except Exception as e:
             print("初始化步数失败: 已将最小值设置为 19999", e)
             min_step = 10000
         try:
-            max_step = math.ceil(int(self.check_item.get("max_step", 19999))*step_ratio)
+            max_step = math.ceil(int(self.check_item.get("max_step", 19999)))
         except Exception as e:
             print("初始化步数失败: 已将最大值设置为 19999", e)
             max_step = 19999
@@ -240,9 +247,9 @@ class MiMotion():
 
 if __name__ == "__main__":
     try:
-        #with open(os.path.join(os.path.dirname(os.path.dirname(__file__)), "/root/config.json"), "r", encoding="utf-8") as f:
-            #datas = json.loads(f.read())
-        datas = json.loads(os.environ["CONFIG"])
+        with open(r"./config.json", "r", encoding="utf-8") as f:
+            datas = json.loads(f.read())
+        # datas = json.loads(os.environ["CONFIG"])
         # 开启根据地区天气情况降低步数（默认关闭）
         if datas.get("OPEN_GET_WEATHER"):
             open_get_weather = datas.get("OPEN_GET_WEATHER")
